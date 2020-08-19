@@ -1,5 +1,9 @@
 package com.zollylobby;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 
 import java.io.*;
@@ -13,6 +17,7 @@ public class Zollinger {
 
     public static void installGeckoDriver(String driverFile){
         /*
+        this method is kinda useless.
         this method verifies geckodriver install, and installs if it isn't installed.
         this method installs the geckodriver w/o any browser, so that the browser can be used by others.
         it's assumed that the gecko driver needed is version 27 --> https://mzl.la/33RH9jq
