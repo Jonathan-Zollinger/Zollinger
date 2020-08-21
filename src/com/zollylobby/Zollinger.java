@@ -15,6 +15,37 @@ import java.util.zip.ZipInputStream;
 
 public class Zollinger {
 
+    public static WebDriver getHeadlessDriverWithSpecDownload(
+            String DriverPath, String downloadFilepath,String mimeType) {
+
+        String driverFile = DriverPath;
+        System.setProperty("webdriver.gecko.driver", driverFile);
+        FirefoxProfile profile = new FirefoxProfile();
+
+        //set Firefox profile preferences
+            /* it seems like you could get away without changing the browser.download.folderList preference to "2", but
+            without it we can't change the browser.download.dir preference. */
+        profile.setPreference("browser.download.folderList", 2);//uses last download directory as destination directory
+        profile.setPreference("browser.download.dir",downloadFilepath); //if path = invalid, goes to downloads folder
+
+        /* the second argument in these preferences is what's called a "mimetype" of a filetype.
+        I find the easiest way to figure the proper mimetype for your use is to follow Florent B's suggestion
+        and look at the network panel under the developer tools under a manual run through. https://bit.ly/2FEYB0p */
+        profile.setPreference("browser.helperApps.neverAsk.openFile",mimeType);
+        profile.setPreference("browser.helperApps.neverAsk.saveToDisk",mimeType);
+
+        //set Firefox options
+        FirefoxOptions options = new FirefoxOptions();
+        options.setHeadless(true); //run headless version of firefox
+
+        //include profile in options
+        options.setProfile(profile); //include all the profile settings in this option set
+
+        //initiate new instance of firefox
+        return new FirefoxDriver(options); //call the driver w/ our specified options (and profile).
+
+    }//end public static WebDriver getHeadlessDriverWithSpecDownload(String downloadFilepath, String mimeType)
+
     public static void installGeckoDriver(String driverFile){
         /*
         this method is kinda useless.
